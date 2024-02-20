@@ -1,5 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Expendiary.Core;
+using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client.NativeInterop;
 using System.Data;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Windows.Forms;
 
 namespace Expendiary.Data
 {
@@ -83,15 +88,15 @@ namespace Expendiary.Data
         {
             OpenConnection();
             command.CommandText =
-              "SELECT " +
-              "transactionID AS 'Transaction', " +
-              "userID AS 'User', " +
-              "categoryID AS 'Category', " +
-              "transactionAmount AS 'Amount', " +
-              "transactionDescription AS 'Description', " +
-              "transactionDate AS 'Date', " +
-              "paymentMethod AS 'Payment' " +
-              "FROM transactions";
+               "SELECT " +
+               "dateOfPurchase AS 'DATE', " +
+               "transactionID AS 'TRANSACTION', " +
+               "username AS 'USERNAME', " +
+               "category AS 'CATEGORY', " +
+               "company AS 'COMPANY', " + 
+               "amount AS '($)' " + 
+               "FROM transactions " + 
+               "ORDER BY dateOfPurchase, transactionID";
         }
 
         /*

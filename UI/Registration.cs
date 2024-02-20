@@ -24,12 +24,15 @@ namespace Expendiary
             if (userCreated)
             {
                 MessageBox.Show("User successfully created.");
+                this.Close();
                 // Possibly transition to a login screen or dashboard
             }
             else
             {
                 MessageBox.Show("User could not be created. The username might already exist.");
             }
+
+            
         }
     }
 }
