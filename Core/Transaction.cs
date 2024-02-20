@@ -3,34 +3,30 @@
     internal class Transaction
     {
         public int TransactionID { get; set; }
-        public int UserID { get; set; }
-        public int CategoryID { get; set; }
-        public decimal TransactionAmount { get; set; }
-        public DateTime TransactionDate { get; set; }
-        public string TransactionDescription { get; set; }
-        public string PaymentMethod { get; set; }
+        public string Username { get; set; } 
+        public string Company { get; set; } 
+        public string Category { get; set; } 
+        public decimal Amount { get; set; } 
+        public DateTime DateOfPurchase { get; set; } 
 
         public Transaction()
         {
             TransactionID = 0;
-            UserID = 0;
-            CategoryID = 0;
-            TransactionAmount = 0.0m;
-            TransactionDate = DateTime.UtcNow;
-            TransactionDescription = "defaultDescription";
-            PaymentMethod = "defaultMethod";
+            Username = "";
+            Company = "";
+            Category = "";
+            Amount = 0.0m;
+            DateOfPurchase = DateTime.UtcNow;
         }
 
-        public Transaction(int transactionID, int userID, int categoryID, decimal transactionAmount, DateTime transactionDate, string transactionDescription, string paymentMethod)
+        public Transaction(int transactionID, string username, string company, string category, decimal amount, DateTime dateOfPurchase)
         {
             TransactionID = transactionID;
-            UserID = userID;
-            CategoryID = categoryID;
-            TransactionAmount = transactionAmount;
-            TransactionDate = transactionDate;
-            TransactionDescription = transactionDescription;
-            PaymentMethod = paymentMethod;
+            Username = username;
+            Company = company;
+            Category = category;
+            Amount = amount;
+            DateOfPurchase = dateOfPurchase;
         }
     }
-
 }
