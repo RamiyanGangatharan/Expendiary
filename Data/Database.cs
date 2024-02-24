@@ -5,6 +5,7 @@ using System.Data;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Windows.Forms;
+using System.Transactions;
 
 namespace Expendiary.Data
 {
@@ -15,7 +16,7 @@ namespace Expendiary.Data
 
         public Database()
         {
-            string connectionString = "Data Source=LAPTOP-3UT42LKF;Initial Catalog=Expendiary;Integrated Security=True;Encrypt=False";
+            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
             conn = new SqlConnection(connectionString);
             command = new SqlCommand(connectionString, conn);
         }
@@ -28,6 +29,7 @@ namespace Expendiary.Data
             OpenConnection();
 
             // Prepare the command for authentication check
+            command.Parameters.Clear();
             command.CommandText = "SELECT COUNT(1) FROM users WHERE username = @username AND passwordHash = @password";
             command.Parameters.AddWithValue("@username", username);
             command.Parameters.AddWithValue("@password", password); // This should ideally be a hashed password
@@ -86,34 +88,79 @@ namespace Expendiary.Data
 
         public void SQL_SELECT()
         {
-            OpenConnection();
+            command.Parameters.Clear();
             command.CommandText =
-               "SELECT " +
-               "dateOfPurchase AS 'DATE', " +
-               "transactionID AS 'TRANSACTION', " +
-               "username AS 'USERNAME', " +
-               "category AS 'CATEGORY', " +
-               "company AS 'COMPANY', " + 
-               "amount AS '($)' " + 
-               "FROM transactions " + 
-               "ORDER BY dateOfPurchase, transactionID";
+                "SELECT " +
+                "dateOfPurchase AS 'DATE', " +
+                "transactionID AS 'TRANS #', " +
+                "username AS 'USERNAME', " +
+                "category AS 'CATEGORY', " +
+                "company AS 'COMPANY', " +
+                "amount AS '($)' " +
+                "FROM transactions " +
+                "WHERE username = @Username " +
+                "ORDER BY dateOfPurchase DESC";
+            command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+            
         }
 
-        /*
-            SQL_INSERT FUNCTION HERE
-         */
-        public void SQL_DELETE(string invoiceNumber)
-        {
 
+        public void SQL_INSERT(Core.Transaction transaction)
+        {
+            OpenConnection();
+
+            try
+            {
+                command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+                command.CommandText = "INSERT INTO transactions (Username, Company, Category, Amount, DateOfPurchase) VALUES (@Username, @Company, @Category, @Amount, @DateOfPurchase)";
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@Username", transaction.Username);
+                command.Parameters.AddWithValue("@Company", transaction.Company);
+                command.Parameters.AddWithValue("@Category", transaction.Category);
+                command.Parameters.AddWithValue("@Amount", transaction.Amount);
+                command.Parameters.AddWithValue("@DateOfPurchase", transaction.DateOfPurchase);
+                command.ExecuteNonQuery();
+                   
+            }
+            catch (SqlException e)
+            {
+                // Handle exceptions
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public bool SQL_DELETE(int transactionId, DataGridView TransactionGrid)
+        {
+            try
+            {
+                // Open the connection
+                OpenConnection();
+
+                // Prepare the command to delete the transaction
+                command.Parameters.Clear();
+                command.CommandText = "DELETE FROM transactions WHERE transactionID = @transactionId";
+                command.Parameters.AddWithValue("@transactionId", transactionId);
+
+                // Execute the command
+                int result = command.ExecuteNonQuery();
+                LoadGridView(TransactionGrid);
+
+                // Return true if one row was deleted
+                return result == 1;
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         public void SQL_RETRIEVE(DataGridView TransactionGrid)
         {
-            OpenConnection();
-            SqlDataAdapter DA = new SqlDataAdapter(command);
+            SqlDataAdapter DA = new SqlDataAdapter(command); 
             DataTable DT = new DataTable();
             DA.Fill(DT);
-            TransactionGrid.Refresh();
             TransactionGrid.DataSource = DT;
         }
 
@@ -133,10 +180,7 @@ namespace Expendiary.Data
 
         public void CreateConnection(DataGridView TransactionGrid)
         {
-            string connectionString = "Data Source=LAPTOP-3UT42LKF;Initial Catalog=Expendiary;Integrated Security=True;Encrypt=False";
-
-            conn = new SqlConnection(connectionString);
-            command = new SqlCommand(connectionString, conn);
+            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
 
             conn = new SqlConnection(connectionString);
             conn.Open();
