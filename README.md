@@ -38,7 +38,3 @@ To get started with the Transaction Tracker, follow these steps:
 ## Contributing
 
 Contributions to the Transaction Tracker are welcome! If you have suggestions or improvements, please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
