@@ -1,3 +1,4 @@
+using Expendiary.Core;
 using Expendiary.Data;
 
 namespace Expendiary
@@ -19,17 +20,21 @@ namespace Expendiary
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
+            // First, declare and initialize the username and password variables
             string username = username_rtb.Text;
-            string password = password_rtb.Text; // This should be a hashed password
+            string password = password_rtb.Text; // This should ideally be hashed
 
+            // Then, attempt the login
             if (data.Login(username, password))
             {
-                // Instantiate and show the dashboard form
-                Dashboard dashboard = new Dashboard();
-                this.Hide(); // Optional: Hide the login form
+                // Store the username in the UserSession
+                UserSession.Login(username);
+
+                // Then create the Dashboard instance
+                Dashboard dashboard = new Dashboard(); // No need to pass username anymore
+                this.Hide();
                 dashboard.Show();
             }
-            else { MessageBox.Show("Login failed. Please check your username and password."); }
         }
 
         private void registerButton_Click(object sender, EventArgs e)

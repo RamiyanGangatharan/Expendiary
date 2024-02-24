@@ -1,14 +1,16 @@
-﻿using Expendiary.UI;
+﻿using Expendiary.Core;
+using Expendiary.UI;
 
 namespace Expendiary
 {
     public partial class Dashboard : Form
     {
-        private object dash;
+        private string loggedInUsername;
 
         public Dashboard()
         {
             InitializeComponent();
+            this.loggedInUsername = UserSession.CurrentUsername;
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -57,22 +59,14 @@ namespace Expendiary
             var result = MessageBox.Show("Are you sure you want logout?", "LOGOUT", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                UserSession.Logout();
                 Login log = new Login();
                 this.Hide();
                 log.Show();
             }
         }
 
-        private void Dashboard_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            var result = MessageBox.Show("Are you really sure you want to close the application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes) { Application.Exit(); }
-        }
-
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Are you sure you want to close the application?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes) { Application.Exit(); }
-        }
+        private void Dashboard_FormClosed(object sender, FormClosedEventArgs e) { Application.Exit();}
+        private void exitButton_Click(object sender, EventArgs e) {Application.Exit();}
     }
 }
