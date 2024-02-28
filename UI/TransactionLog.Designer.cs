@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             TransactionGrid = new DataGridView();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
@@ -75,19 +78,19 @@
             deleteButton = new Button();
             categoryCombo = new ComboBox();
             groupBox1 = new GroupBox();
-            button5 = new Button();
+            applyFilterButton = new Button();
             label10 = new Label();
             label9 = new Label();
-            richTextBox4 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
+            priceRange2FilterRTB = new RichTextBox();
+            priceRange1FilterRTB = new RichTextBox();
             label8 = new Label();
             label7 = new Label();
-            comboBox3 = new ComboBox();
-            comboBox2 = new ComboBox();
+            CategoryFilterCombo = new ComboBox();
+            transactionTypeFilterCombo = new ComboBox();
             label6 = new Label();
             label5 = new Label();
-            dateTimePicker2 = new DateTimePicker();
-            dateTimePicker1 = new DateTimePicker();
+            endDateFilterDTP = new DateTimePicker();
+            startDateFilterDTP = new DateTimePicker();
             label4 = new Label();
             groupBox2 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)TransactionGrid).BeginInit();
@@ -98,18 +101,39 @@
             // 
             // TransactionGrid
             // 
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            TransactionGrid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             TransactionGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             TransactionGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             TransactionGrid.BackgroundColor = Color.FromArgb(215, 206, 199);
             TransactionGrid.BorderStyle = BorderStyle.None;
+            TransactionGrid.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.InactiveCaption;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            TransactionGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             TransactionGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            TransactionGrid.DefaultCellStyle = dataGridViewCellStyle6;
             TransactionGrid.Location = new Point(14, 25);
             TransactionGrid.MultiSelect = false;
             TransactionGrid.Name = "TransactionGrid";
             TransactionGrid.ReadOnly = true;
+            TransactionGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             TransactionGrid.RowTemplate.ReadOnly = true;
             TransactionGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            TransactionGrid.Size = new Size(788, 200);
+            TransactionGrid.Size = new Size(741, 474);
             TransactionGrid.TabIndex = 0;
             // 
             // menuStrip1
@@ -119,7 +143,7 @@
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(7, 2, 0, 2);
-            menuStrip1.Size = new Size(816, 24);
+            menuStrip1.Size = new Size(1184, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -330,7 +354,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 18);
+            label1.Location = new Point(9, 18);
             label1.Name = "label1";
             label1.Size = new Size(66, 14);
             label1.TabIndex = 2;
@@ -338,16 +362,16 @@
             // 
             // companyRTB
             // 
-            companyRTB.Location = new Point(6, 35);
+            companyRTB.Location = new Point(9, 35);
             companyRTB.Name = "companyRTB";
-            companyRTB.Size = new Size(200, 25);
+            companyRTB.Size = new Size(161, 25);
             companyRTB.TabIndex = 3;
             companyRTB.Text = "";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 79);
+            label2.Location = new Point(9, 79);
             label2.Name = "label2";
             label2.Size = new Size(65, 14);
             label2.TabIndex = 4;
@@ -355,16 +379,16 @@
             // 
             // AmountRTB
             // 
-            AmountRTB.Location = new Point(6, 150);
+            AmountRTB.Location = new Point(9, 150);
             AmountRTB.Name = "AmountRTB";
-            AmountRTB.Size = new Size(200, 25);
+            AmountRTB.Size = new Size(161, 25);
             AmountRTB.TabIndex = 7;
             AmountRTB.Text = "";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 133);
+            label3.Location = new Point(9, 133);
             label3.Name = "label3";
             label3.Size = new Size(77, 14);
             label3.TabIndex = 6;
@@ -372,16 +396,16 @@
             // 
             // DTP_insertion
             // 
-            DTP_insertion.Location = new Point(218, 27);
+            DTP_insertion.Location = new Point(182, 27);
             DTP_insertion.Name = "DTP_insertion";
             DTP_insertion.TabIndex = 8;
             DTP_insertion.DateSelected += DTP_insertion_DateSelected;
             // 
             // insertButton
             // 
-            insertButton.Location = new Point(457, 31);
+            insertButton.Location = new Point(761, 235);
             insertButton.Name = "insertButton";
-            insertButton.Size = new Size(75, 35);
+            insertButton.Size = new Size(100, 45);
             insertButton.TabIndex = 11;
             insertButton.Text = "Insert";
             insertButton.UseVisualStyleBackColor = true;
@@ -389,9 +413,9 @@
             // 
             // exitButton
             // 
-            exitButton.Location = new Point(457, 154);
+            exitButton.Location = new Point(1079, 235);
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(75, 35);
+            exitButton.Size = new Size(100, 45);
             exitButton.TabIndex = 12;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = true;
@@ -399,9 +423,9 @@
             // 
             // updateButton
             // 
-            updateButton.Location = new Point(457, 72);
+            updateButton.Location = new Point(867, 235);
             updateButton.Name = "updateButton";
-            updateButton.Size = new Size(75, 35);
+            updateButton.Size = new Size(100, 45);
             updateButton.TabIndex = 13;
             updateButton.Text = "Update";
             updateButton.UseVisualStyleBackColor = true;
@@ -409,9 +433,9 @@
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(457, 113);
+            deleteButton.Location = new Point(973, 235);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(75, 35);
+            deleteButton.Size = new Size(100, 45);
             deleteButton.TabIndex = 14;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = true;
@@ -423,42 +447,43 @@
             categoryCombo.FlatStyle = FlatStyle.Flat;
             categoryCombo.FormattingEnabled = true;
             categoryCombo.Items.AddRange(new object[] { "Income", "Housing ", "Transportation", "Dining", "Utilities ", "Entertainment", "Grocery", "Fuel", "Insurance", "Medical", "Savings ", "Investments ", "Miscellaneous" });
-            categoryCombo.Location = new Point(6, 96);
+            categoryCombo.Location = new Point(9, 96);
             categoryCombo.Name = "categoryCombo";
-            categoryCombo.Size = new Size(200, 22);
+            categoryCombo.Size = new Size(161, 22);
             categoryCombo.TabIndex = 15;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(button5);
+            groupBox1.Controls.Add(applyFilterButton);
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(label9);
-            groupBox1.Controls.Add(richTextBox4);
-            groupBox1.Controls.Add(richTextBox2);
+            groupBox1.Controls.Add(priceRange2FilterRTB);
+            groupBox1.Controls.Add(priceRange1FilterRTB);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(label7);
-            groupBox1.Controls.Add(comboBox3);
-            groupBox1.Controls.Add(comboBox2);
+            groupBox1.Controls.Add(CategoryFilterCombo);
+            groupBox1.Controls.Add(transactionTypeFilterCombo);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(dateTimePicker2);
-            groupBox1.Controls.Add(dateTimePicker1);
+            groupBox1.Controls.Add(endDateFilterDTP);
+            groupBox1.Controls.Add(startDateFilterDTP);
             groupBox1.Controls.Add(label4);
-            groupBox1.Location = new Point(564, 231);
+            groupBox1.Location = new Point(761, 27);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(238, 202);
             groupBox1.TabIndex = 16;
             groupBox1.TabStop = false;
             groupBox1.Text = "Filters";
             // 
-            // button5
+            // applyFilterButton
             // 
-            button5.Location = new Point(6, 154);
-            button5.Name = "button5";
-            button5.Size = new Size(226, 35);
-            button5.TabIndex = 26;
-            button5.Text = "Apply Filter(s)";
-            button5.UseVisualStyleBackColor = true;
+            applyFilterButton.Location = new Point(6, 154);
+            applyFilterButton.Name = "applyFilterButton";
+            applyFilterButton.Size = new Size(226, 35);
+            applyFilterButton.TabIndex = 26;
+            applyFilterButton.Text = "Apply Filter(s)";
+            applyFilterButton.UseVisualStyleBackColor = true;
+            applyFilterButton.Click += applyFilterButton_Click;
             // 
             // label10
             // 
@@ -478,21 +503,21 @@
             label9.TabIndex = 24;
             label9.Text = "-";
             // 
-            // richTextBox4
+            // priceRange2FilterRTB
             // 
-            richTextBox4.Location = new Point(132, 121);
-            richTextBox4.Name = "richTextBox4";
-            richTextBox4.Size = new Size(100, 25);
-            richTextBox4.TabIndex = 23;
-            richTextBox4.Text = "";
+            priceRange2FilterRTB.Location = new Point(132, 121);
+            priceRange2FilterRTB.Name = "priceRange2FilterRTB";
+            priceRange2FilterRTB.Size = new Size(100, 25);
+            priceRange2FilterRTB.TabIndex = 23;
+            priceRange2FilterRTB.Text = "";
             // 
-            // richTextBox2
+            // priceRange1FilterRTB
             // 
-            richTextBox2.Location = new Point(6, 121);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(100, 25);
-            richTextBox2.TabIndex = 22;
-            richTextBox2.Text = "";
+            priceRange1FilterRTB.Location = new Point(6, 121);
+            priceRange1FilterRTB.Name = "priceRange1FilterRTB";
+            priceRange1FilterRTB.Size = new Size(100, 25);
+            priceRange1FilterRTB.TabIndex = 22;
+            priceRange1FilterRTB.Text = "";
             // 
             // label8
             // 
@@ -506,27 +531,27 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(120, 18);
+            label7.Location = new Point(132, 18);
             label7.Name = "label7";
             label7.Size = new Size(65, 14);
             label7.TabIndex = 20;
             label7.Text = "End Date";
             // 
-            // comboBox3
+            // CategoryFilterCombo
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(120, 79);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(112, 22);
-            comboBox3.TabIndex = 19;
+            CategoryFilterCombo.FormattingEnabled = true;
+            CategoryFilterCombo.Location = new Point(120, 79);
+            CategoryFilterCombo.Name = "CategoryFilterCombo";
+            CategoryFilterCombo.Size = new Size(112, 22);
+            CategoryFilterCombo.TabIndex = 19;
             // 
-            // comboBox2
+            // transactionTypeFilterCombo
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(6, 79);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(112, 22);
-            comboBox2.TabIndex = 18;
+            transactionTypeFilterCombo.FormattingEnabled = true;
+            transactionTypeFilterCombo.Location = new Point(6, 79);
+            transactionTypeFilterCombo.Name = "transactionTypeFilterCombo";
+            transactionTypeFilterCombo.Size = new Size(112, 22);
+            transactionTypeFilterCombo.TabIndex = 18;
             // 
             // label6
             // 
@@ -546,21 +571,21 @@
             label5.TabIndex = 16;
             label5.Text = "Transaction Type";
             // 
-            // dateTimePicker2
+            // endDateFilterDTP
             // 
-            dateTimePicker2.Format = DateTimePickerFormat.Short;
-            dateTimePicker2.Location = new Point(132, 35);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(100, 22);
-            dateTimePicker2.TabIndex = 15;
+            endDateFilterDTP.Format = DateTimePickerFormat.Short;
+            endDateFilterDTP.Location = new Point(132, 35);
+            endDateFilterDTP.Name = "endDateFilterDTP";
+            endDateFilterDTP.Size = new Size(100, 22);
+            endDateFilterDTP.TabIndex = 15;
             // 
-            // dateTimePicker1
+            // startDateFilterDTP
             // 
-            dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(6, 35);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(100, 22);
-            dateTimePicker1.TabIndex = 14;
+            startDateFilterDTP.Format = DateTimePickerFormat.Short;
+            startDateFilterDTP.Location = new Point(6, 35);
+            startDateFilterDTP.Name = "startDateFilterDTP";
+            startDateFilterDTP.Size = new Size(100, 22);
+            startDateFilterDTP.TabIndex = 14;
             // 
             // label4
             // 
@@ -575,18 +600,14 @@
             // 
             groupBox2.Controls.Add(companyRTB);
             groupBox2.Controls.Add(label1);
-            groupBox2.Controls.Add(deleteButton);
             groupBox2.Controls.Add(categoryCombo);
-            groupBox2.Controls.Add(updateButton);
-            groupBox2.Controls.Add(exitButton);
             groupBox2.Controls.Add(label2);
-            groupBox2.Controls.Add(insertButton);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(AmountRTB);
             groupBox2.Controls.Add(DTP_insertion);
-            groupBox2.Location = new Point(14, 231);
+            groupBox2.Location = new Point(761, 297);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(544, 202);
+            groupBox2.Size = new Size(418, 202);
             groupBox2.TabIndex = 17;
             groupBox2.TabStop = false;
             groupBox2.Text = "Data Entry Fields";
@@ -596,11 +617,15 @@
             AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 206, 199);
-            ClientSize = new Size(816, 445);
+            ClientSize = new Size(1184, 511);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            Controls.Add(deleteButton);
+            Controls.Add(exitButton);
             Controls.Add(TransactionGrid);
             Controls.Add(menuStrip1);
+            Controls.Add(updateButton);
+            Controls.Add(insertButton);
             Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MainMenuStrip = menuStrip1;
             Name = "TransactionLog";
@@ -666,20 +691,20 @@
         private Button deleteButton;
         private ComboBox categoryCombo;
         private GroupBox groupBox1;
-        private DateTimePicker dateTimePicker2;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker endDateFilterDTP;
+        private DateTimePicker startDateFilterDTP;
         private Label label4;
         private Label label7;
-        private ComboBox comboBox3;
-        private ComboBox comboBox2;
+        private ComboBox CategoryFilterCombo;
+        private ComboBox transactionTypeFilterCombo;
         private Label label6;
         private Label label5;
-        private RichTextBox richTextBox4;
-        private RichTextBox richTextBox2;
+        private RichTextBox priceRange2FilterRTB;
+        private RichTextBox priceRange1FilterRTB;
         private Label label8;
         private GroupBox groupBox2;
         private Label label9;
         private Label label10;
-        private Button button5;
+        private Button applyFilterButton;
     }
 }

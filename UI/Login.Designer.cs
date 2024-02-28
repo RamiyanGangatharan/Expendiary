@@ -37,8 +37,8 @@ namespace Expendiary
             label3 = new Label();
             label4 = new Label();
             username_rtb = new RichTextBox();
-            password_rtb = new RichTextBox();
             registerButton = new Button();
+            password_rtb = new MaskedTextBox();
             SuspendLayout();
             // 
             // Title
@@ -114,14 +114,6 @@ namespace Expendiary
             username_rtb.TabIndex = 6;
             username_rtb.Text = "";
             // 
-            // password_rtb
-            // 
-            password_rtb.Location = new Point(120, 150);
-            password_rtb.Name = "password_rtb";
-            password_rtb.Size = new Size(200, 25);
-            password_rtb.TabIndex = 7;
-            password_rtb.Text = "";
-            // 
             // registerButton
             // 
             registerButton.BackColor = Color.FromArgb(118, 50, 63);
@@ -136,14 +128,22 @@ namespace Expendiary
             registerButton.UseVisualStyleBackColor = false;
             registerButton.Click += registerButton_Click;
             // 
+            // password_rtb
+            // 
+            password_rtb.Location = new Point(119, 148);
+            password_rtb.Name = "password_rtb";
+            password_rtb.PasswordChar = '*';
+            password_rtb.Size = new Size(200, 27);
+            password_rtb.TabIndex = 9;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(10F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(215, 206, 199);
             ClientSize = new Size(428, 316);
-            Controls.Add(registerButton);
             Controls.Add(password_rtb);
+            Controls.Add(registerButton);
             Controls.Add(username_rtb);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -171,7 +171,7 @@ namespace Expendiary
         private Label label3;
         private Label label4;
         private RichTextBox username_rtb;
-        private RichTextBox password_rtb;
         private Button registerButton;
+        private MaskedTextBox password_rtb;
     }
 }

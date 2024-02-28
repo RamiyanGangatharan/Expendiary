@@ -1,11 +1,7 @@
 ﻿using Expendiary.Core;
+using Expendiary.UI;
 using Microsoft.Data.SqlClient;
-using Microsoft.Identity.Client.NativeInterop;
 using System.Data;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.Windows.Forms;
-using System.Transactions;
 
 namespace Expendiary.Data
 {
@@ -86,26 +82,42 @@ namespace Expendiary.Data
             }
         }
 
-        public void SQL_SELECT()
+        public void SQL_SELECT_TRANSACTIONS()
         {
-            command.Parameters.Clear();
-            command.CommandText =
-                "SELECT " +
-                "dateOfPurchase AS 'DATE', " +
-                "transactionID AS 'TRANS #', " +
-                "username AS 'USERNAME', " +
-                "category AS 'CATEGORY', " +
-                "company AS 'COMPANY', " +
-                "amount AS '($)' " +
-                "FROM transactions " +
-                "WHERE username = @Username " +
-                "ORDER BY dateOfPurchase DESC";
-            command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
-            
+            if (UserSession.CurrentUsername == "Admin")
+            {
+                command.Parameters.Clear();
+                command.CommandText =
+                    "SELECT " +
+                    "dateOfPurchase AS 'DATE', " +
+                    "transactionID AS 'TRANS #', " +
+                    "username AS 'USERNAME', " +
+                    "category AS 'CATEGORY', " +
+                    "company AS 'COMPANY', " +
+                    "FORMAT(amount, 'C', 'en-US') AS 'AMOUNT' " + // Note the use of FORMAT here
+                    "FROM transactions " +
+                    "ORDER BY dateOfPurchase DESC";
+                command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+            }
+            else
+            {
+                command.Parameters.Clear();
+                command.CommandText =
+                    "SELECT " +
+                    "dateOfPurchase AS 'DATE', " +
+                    "transactionID AS 'TRANS #', " +
+                    "username AS 'USERNAME', " +
+                    "category AS 'CATEGORY', " +
+                    "company AS 'COMPANY', " +
+                    "FORMAT(amount, 'C', 'en-US') AS 'AMOUNT' " + // Note the use of FORMAT here
+                    "FROM transactions " +
+                    "WHERE username = @Username " +
+                    "ORDER BY dateOfPurchase DESC";
+                command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+            }
         }
 
-
-        public void SQL_INSERT(Core.Transaction transaction)
+        public void SQL_INSERT_TRANSACTIONS(Core.Transaction transaction)
         {
             OpenConnection();
 
@@ -120,7 +132,7 @@ namespace Expendiary.Data
                 command.Parameters.AddWithValue("@Amount", transaction.Amount);
                 command.Parameters.AddWithValue("@DateOfPurchase", transaction.DateOfPurchase);
                 command.ExecuteNonQuery();
-                   
+
             }
             catch (SqlException e)
             {
@@ -129,7 +141,7 @@ namespace Expendiary.Data
             }
         }
 
-        public bool SQL_DELETE(int transactionId, DataGridView TransactionGrid)
+        public bool SQL_DELETE_TRANSACTIONS(int transactionId, DataGridView TransactionGrid)
         {
             try
             {
@@ -143,11 +155,11 @@ namespace Expendiary.Data
 
                 // Execute the command
                 int result = command.ExecuteNonQuery();
-                LoadGridView(TransactionGrid);
+                LOAD_GRID_VIEW_TRANSACTIONS(TransactionGrid);
 
                 // Return true if one row was deleted
                 return result == 1;
-                
+
             }
             catch (Exception ex)
             {
@@ -156,21 +168,23 @@ namespace Expendiary.Data
             }
         }
 
-        public void SQL_RETRIEVE(DataGridView TransactionGrid)
+        public void SQL_RETRIEVE_TRANSACTIONS(DataGridView TransactionGrid)
         {
-            SqlDataAdapter DA = new SqlDataAdapter(command); 
+            SqlDataAdapter DA = new SqlDataAdapter(command);
             DataTable DT = new DataTable();
             DA.Fill(DT);
             TransactionGrid.DataSource = DT;
         }
+        
+       
 
-        public void LoadGridView(DataGridView TransactionGrid)
+        public void LOAD_GRID_VIEW_TRANSACTIONS(DataGridView TransactionGrid)
         {
             OpenConnection();
             try
             {
-                SQL_SELECT();
-                SQL_RETRIEVE(TransactionGrid);
+                SQL_SELECT_TRANSACTIONS();
+                SQL_RETRIEVE_TRANSACTIONS(TransactionGrid);
             }
             catch (Exception ex)
             {
@@ -178,15 +192,66 @@ namespace Expendiary.Data
             }
         }
 
-        public void CreateConnection(DataGridView TransactionGrid)
+        public void CreateConnection_Transactions(DataGridView TransactionGrid)
         {
             string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
 
             conn = new SqlConnection(connectionString);
             conn.Open();
             command = conn.CreateCommand();
-            LoadGridView(TransactionGrid);
+            LOAD_GRID_VIEW_TRANSACTIONS(TransactionGrid);
         }
+
+        
+        public void SQL_SELECT_BUDGET(DataGridView BudgetGrid)
+        {
+            if (UserSession.CurrentUsername == "Admin")
+            {
+                command.Parameters.Clear();
+                command.CommandText = "SELECT * FROM vw_UserFinancialSummary;";
+                command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+            }
+            else
+            {
+                command.Parameters.Clear();
+                command.CommandText = "SELECT * FROM vw_UserFinancialSummary WHERE username = @Username";
+                command.Parameters.AddWithValue("@Username", UserSession.CurrentUsername);
+            }
+        }
+
+        public void SQL_RETRIEVE_BUDGETS(DataGridView BudgetGrid)
+        {
+            SqlDataAdapter DA = new SqlDataAdapter(command);
+            DataTable DT = new DataTable();
+            DA.Fill(DT);
+            BudgetGrid.DataSource = DT;
+        }
+
+        public void LOAD_GRID_VIEW_BUDGETS(DataGridView BudgetGrid)
+        {
+            OpenConnection();
+            try
+            {
+                SQL_SELECT_BUDGET(BudgetGrid);
+                SQL_RETRIEVE_BUDGETS(BudgetGrid);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load data: " + ex.Message);
+            }
+        }
+
+        public void CreateConnection_Budgets(DataGridView BudgetGrid)
+        {
+            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
+
+            conn = new SqlConnection(connectionString);
+            conn.Open();
+            command = conn.CreateCommand();
+            LOAD_GRID_VIEW_BUDGETS(BudgetGrid);
+        }
+
+
         public void OpenConnection()
         {
             if (conn.State != ConnectionState.Open)
@@ -194,6 +259,7 @@ namespace Expendiary.Data
                 conn.Open();
             }
         }
+
         public void CloseConnection()
         {
             if (conn.State != ConnectionState.Closed)

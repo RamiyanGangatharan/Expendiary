@@ -66,7 +66,12 @@ namespace Expendiary
             }
         }
 
-        private void Dashboard_FormClosed(object sender, FormClosedEventArgs e) { Application.Exit();}
-        private void exitButton_Click(object sender, EventArgs e) {Application.Exit();}
+        private void Dashboard_FormClosed(object sender, FormClosedEventArgs e) { Application.Exit(); }
+        private void exitButton_Click(object sender, EventArgs e) { Application.Exit(); }
+
+        private void welcomeMessage_VisibleChanged(object sender, EventArgs e)
+        {
+            welcomeMessage.Text = "Welcome to the Dashboard, " + UserSession.CurrentUsername + "!";
+        }
     }
 }

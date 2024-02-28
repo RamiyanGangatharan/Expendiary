@@ -35,6 +35,12 @@ namespace Expendiary
                 this.Hide();
                 dashboard.Show();
             }
+            else
+            {
+                MessageBox.Show("INVALID CREDENTIALS. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                password_rtb.Clear();
+                username_rtb.Clear();
+            }
         }
 
         private void registerButton_Click(object sender, EventArgs e)
