@@ -28,6 +28,8 @@ To get started with the Transaction Tracker, follow these steps:
 1. **Login**: Access the application and log in using your credentials.
 2. **Enter Transactions**: Once logged in, use the data entry form to input your transactions.
 3. **Review Transactions**: View and manage your recorded transactions through the application interface.
+4. **View Gains & Losses**: View the flow of income and expenses through the budgeting section of the app.
+5. **Create Budgets**: Using my budgeting tool, you can create budgets of your own.
 
 ## Technical Details
 
