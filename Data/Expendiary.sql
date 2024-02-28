@@ -17,7 +17,24 @@ CREATE TABLE transactions
     dateOfPurchase DATE NOT NULL
 );
 
-SELECT * FROM transactions;
-DELETE FROM users WHERE users.userID = 1;
+CREATE TABLE Categories
+(
+    categoryID INT IDENTITY(1,1) PRIMARY KEY,
+    categoryName VARCHAR(50) UNIQUE NOT NULL
+);
 
-DROP TABLE transactions;
+CREATE VIEW vw_UserFinancialSummary AS
+SELECT
+    u.username,
+    ISNULL(SUM(CASE WHEN t.category = 'Income' THEN t.amount ELSE 0 END), 0) AS TotalIncome,
+    ISNULL(SUM(CASE WHEN t.category NOT IN ('Income') THEN t.amount ELSE 0 END), 0) AS TotalExpenses,
+    ISNULL(SUM(CASE WHEN t.category = 'Income' THEN t.amount ELSE -t.amount END), 0) AS FundsRemaining,
+    CASE 
+        WHEN ISNULL(SUM(CASE WHEN t.category = 'Income' THEN t.amount ELSE -t.amount END), 0) < 0 THEN 'OVER BUDGET'
+        ELSE 'UNDER BUDGET'
+    END AS BudgetStatus
+FROM users u
+LEFT JOIN transactions t ON u.username = t.username
+GROUP BY u.username;
+
+SELECT * FROM users;
