@@ -1,5 +1,6 @@
 ﻿using Expendiary.Core;
 using Expendiary.Data;
+using System.Globalization;
 
 namespace Expendiary
 {
@@ -7,11 +8,11 @@ namespace Expendiary
     {
         Database data = new Database();
         Core.Transaction transaction = new Core.Transaction();
-        public TransactionLog() {InitializeComponent();}
+        public TransactionLog() { InitializeComponent(); }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            data.CreateConnection(TransactionGrid);
+            data.CreateConnection_Transactions(TransactionGrid);
             data.OpenConnection();
         }
 
@@ -29,13 +30,13 @@ namespace Expendiary
                 DateOfPurchase = DTP_insertion.SelectionStart
             };
 
-            data.SQL_INSERT(transaction);
-            data.LoadGridView(TransactionGrid);
+            data.SQL_INSERT_TRANSACTIONS(transaction);
+            data.LOAD_GRID_VIEW_TRANSACTIONS(TransactionGrid);
 
             companyRTB.Clear();
             categoryCombo.SelectedIndex = 0;
             AmountRTB.Clear();
-           
+
         }
 
         private void updateButton_Click(object sender, EventArgs e)
@@ -48,13 +49,21 @@ namespace Expendiary
                 int transactionId = Convert.ToInt32(selectedRow.Cells[1].Value ?? default(int));
                 string company = Convert.ToString(selectedRow.Cells[4].Value ?? string.Empty);
                 string category = Convert.ToString(selectedRow.Cells[3].Value ?? string.Empty);
-                decimal amount = Convert.ToDecimal(selectedRow.Cells[5].Value ?? default(decimal));
+                string amountString = Convert.ToString(selectedRow.Cells[5].Value ?? string.Empty);
+                decimal amount = 0;
+
+                // Remove currency symbol and thousands separator before converting
+                if (!string.IsNullOrEmpty(amountString))
+                {
+                    amountString = amountString.Replace("$", "").Replace(",", "");
+                    amount = decimal.Parse(amountString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
+                }
                 DateTime dateOfPurchase = Convert.ToDateTime(selectedRow.Cells[0].Value ?? default(DateTime));
 
                 Transaction selectedTransaction = new Transaction
                 {
                     TransactionID = transactionId,
-                    Username = UserSession.CurrentUsername, // Make sure UserSession.CurrentUsername is correctly set
+                    Username = UserSession.CurrentUsername,
                     Company = company,
                     Category = category,
                     Amount = amount,
@@ -67,12 +76,9 @@ namespace Expendiary
                 AmountRTB.Text = selectedTransaction.Amount.ToString("0.00");
                 DTP_insertion.SetDate(selectedTransaction.DateOfPurchase);
 
-                data.SQL_DELETE(transactionId, TransactionGrid);
+                data.SQL_DELETE_TRANSACTIONS(transactionId, TransactionGrid);
             }
-            else
-            {
-                MessageBox.Show("Please select a transaction to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            else { MessageBox.Show("Please select a transaction to update.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -85,7 +91,7 @@ namespace Expendiary
                 var confirmResult = MessageBox.Show("Are you sure to delete this item?", "Confirm Delete!", MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    bool isDeleted = data.SQL_DELETE(transactionId, TransactionGrid);
+                    bool isDeleted = data.SQL_DELETE_TRANSACTIONS(transactionId, TransactionGrid);
                     if (isDeleted)
                     {
                         MessageBox.Show("Transaction deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -109,6 +115,11 @@ namespace Expendiary
         }
 
         private void DTP_insertion_DateSelected(object sender, DateRangeEventArgs e)
+        {
+
+        }
+
+        private void applyFilterButton_Click(object sender, EventArgs e)
         {
 
         }
