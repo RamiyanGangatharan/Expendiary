@@ -12,7 +12,7 @@ namespace Expendiary.Data
 
         public Database()
         {
-            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Directory\Durham College\Semester 4\Expendiary-main\Expendiary-main\Data\Expendiary.mdf;Integrated Security=True";
             conn = new SqlConnection(connectionString);
             command = new SqlCommand(connectionString, conn);
         }
@@ -194,7 +194,7 @@ namespace Expendiary.Data
 
         public void CreateConnection_Transactions(DataGridView TransactionGrid)
         {
-            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Directory\Durham College\Semester 4\Expendiary-main\Expendiary-main\Data\Expendiary.mdf;Integrated Security=True";
 
             conn = new SqlConnection(connectionString);
             conn.Open();
@@ -243,7 +243,7 @@ namespace Expendiary.Data
 
         public void CreateConnection_Budgets(DataGridView BudgetGrid)
         {
-            string connectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Data\\Expendiary.mdf\"; Integrated Security = True";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Directory\Durham College\Semester 4\Expendiary-main\Expendiary-main\Data\Expendiary.mdf;Integrated Security=True";
 
             conn = new SqlConnection(connectionString);
             conn.Open();

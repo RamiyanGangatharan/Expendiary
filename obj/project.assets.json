@@ -2225,11 +2225,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Expendiary.csproj",
+      "projectUniqueName": "D:\\Directory\\Durham College\\Semester 4\\Expendiary-main\\Expendiary-main\\Expendiary.csproj",
       "projectName": "Expendiary",
-      "projectPath": "D:\\Directory\\Durham College\\Semester 4\\Expendiary\\Expendiary.csproj",
+      "projectPath": "D:\\Directory\\Durham College\\Semester 4\\Expendiary-main\\Expendiary-main\\Expendiary.csproj",
       "packagesPath": "C:\\Users\\Ramiyan Gangatharan\\.nuget\\packages\\",
-      "outputPath": "D:\\Directory\\Durham College\\Semester 4\\Expendiary\\obj\\",
+      "outputPath": "D:\\Directory\\Durham College\\Semester 4\\Expendiary-main\\Expendiary-main\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
