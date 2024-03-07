@@ -1,4 +1,4 @@
-using Expendiary.Core;
+﻿using Expendiary.Core;
 using Expendiary.UI;
 using Microsoft.Data.SqlClient;
 using System.Data;
