@@ -2,7 +2,7 @@
 
 ## Overview
 
-Expendiary began as a focused ambition to develop a comprehensive Transaction Log application during the reading week of February 15, 2024. However, as I delved deeper into the project, I recognized the potential for a more expansive suite of financial management tools. This realization led to the conceptualization of Expendiary as a suite, with a central Dashboard serving as the hub for accessing various financial management applications. Initiated with the intent to enhance personal financial tracking and management, this project marks the beginning of an ongoing endeavor that I plan to expand and refine throughout my tenure at Durham College. The evolution from a singular application to a multifaceted suite underscores my commitment to providing a robust, user-friendly tool for personal finance management.
+Expendiary began as a focused ambition to develop a comprehensive Transaction Log application during the reading week of February 15, 2024. However, as I delved deeper into the project, I recognized the potential for a more expansive suite of financial management tools. This realization led to the conceptualization of Expendiary as a suite, with a central Dashboard serving as the hub for accessing various financial management applications. Initiated with the intent to enhance personal financial tracking and management, this project marks the beginning of an ongoing endeavor that I plan to expand and refine throughout my tenure at Durham College. The evolution from a singular application to a multifaceted suite underscores my commitment to providing a robust, user-friendly tool for personal finance management at a high level (I am a programmer, not a finance major lol).
 
 ## Features
 
