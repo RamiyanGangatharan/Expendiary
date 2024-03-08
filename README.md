@@ -2,7 +2,7 @@
 
 ## Overview
 
-This side project, Transaction Tracker, is designed to provide a simple and secure way to log in and track financial transactions. The application directly interfaces with a database stored as an MDF file, ensuring that all transactions are recorded and can be reviewed at any time.
+This is my new side project that I started working on at around February 15th 2024 during reading week and will continue working on it until the application is fully polished
 
 ## Features
 
